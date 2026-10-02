@@ -1,0 +1,2147 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Stratify AI — Vera Merchant Workspace</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root, [data-theme="light"] {
+      --bg-outer: linear-gradient(135deg, #dcebf7 0%, #e8f1fa 50%, #d4e5f5 100%);
+      --app-bg: #ffffff;
+      --sidebar-bg: #f8fafc;
+      --sidebar-text: #334155;
+      --text-main: #0f172a;
+      --text-muted: #64748b;
+      --text-dim: #94a3b8;
+      --border-color: #e2e8f0;
+      --card-bg: #ffffff;
+      --card-border: #e2e8f0;
+      --yellow-postit-bg: #fef9c3;
+      --yellow-postit-border: #fef08a;
+      --yellow-postit-text: #854d0e;
+      --accent-blue: #2563eb;
+      --accent-blue-hover: #1d4ed8;
+      --accent-purple: #9333ea;
+      --pill-bg: #f1f5f9;
+      --shadow-sm: 0 4px 12px rgba(15, 23, 42, 0.05);
+      --shadow-md: 0 16px 40px rgba(15, 23, 42, 0.08);
+      --input-bg: #f8fafc;
+    }
+
+    [data-theme="dark"] {
+      --bg-outer: linear-gradient(135deg, #090e17 0%, #0f172a 50%, #0b111e 100%);
+      --app-bg: #0f172a;
+      --sidebar-bg: #0b111e;
+      --sidebar-text: #cbd5e1;
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+      --text-dim: #64748b;
+      --border-color: #1e293b;
+      --card-bg: #1e293b;
+      --card-border: #334155;
+      --yellow-postit-bg: #3730a3;
+      --yellow-postit-border: #4338ca;
+      --yellow-postit-text: #e0e7ff;
+      --accent-blue: #3b82f6;
+      --accent-blue-hover: #60a5fa;
+      --accent-purple: #c084fc;
+      --pill-bg: #1e293b;
+      --shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.3);
+      --shadow-md: 0 16px 40px rgba(0, 0, 0, 0.6);
+      --input-bg: #1e293b;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Plus Jakarta Sans', sans-serif; transition: background-color 0.2s, color 0.2s, border-color 0.2s; }
+
+    body {
+      background: var(--bg-outer);
+      color: var(--text-main);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      overflow-x: hidden;
+    }
+
+    /* -------------------------------------------------------------------------
+       TOP FLOATING TAG PILLS BAR
+       ------------------------------------------------------------------------- */
+    .top-floating-pills-bar {
+      width: 100%;
+      max-width: 1400px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 16px;
+      padding: 0 8px;
+    }
+    .top-pills-group {
+      display: flex;
+      gap: 10px;
+    }
+    .top-pill {
+      background: rgba(255, 255, 255, 0.7);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.5);
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-size: 11px;
+      font-weight: 700;
+      color: #334155;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+    }
+    [data-theme="dark"] .top-pill {
+      background: rgba(15, 23, 42, 0.6);
+      border-color: rgba(255, 255, 255, 0.1);
+      color: #94a3b8;
+    }
+    .top-pill.highlight {
+      background: #fef08a;
+      color: #854d0e;
+      border-color: #fde047;
+    }
+
+    /* -------------------------------------------------------------------------
+       MACOS BROWSER CONTAINER WINDOW
+       ------------------------------------------------------------------------- */
+    #app-container {
+      width: 100%;
+      max-width: 1400px;
+      height: 90vh;
+      max-height: 920px;
+      background: var(--app-bg);
+      border-radius: 24px;
+      box-shadow: var(--shadow-md);
+      overflow: hidden;
+      border: 1px solid var(--border-color);
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* macOS Window Top Browser Chrome */
+    .mac-browser-header {
+      height: 44px;
+      background: var(--sidebar-bg);
+      border-bottom: 1px solid var(--border-color);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 16px;
+    }
+    .mac-window-controls {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .mac-dot { width: 12px; height: 12px; border-radius: 50%; }
+    .mac-dot.red { background: #ef4444; }
+    .mac-dot.yellow { background: #eab308; }
+    .mac-dot.green { background: #22c55e; }
+
+    .mac-url-bar {
+      background: var(--app-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 4px 16px;
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      width: 380px;
+      justify-content: center;
+    }
+
+    .mac-right-actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+
+    .theme-switch-btn {
+      background: var(--pill-bg);
+      border: 1px solid var(--border-color);
+      color: var(--text-main);
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 11px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    /* Main Window Workspace split (Sidebar + Center Content) */
+    .mac-workspace-split {
+      flex: 1;
+      display: flex;
+      overflow: hidden;
+    }
+
+    /* -------------------------------------------------------------------------
+       LEFT SIDEBAR NAVIGATION (Stratify Style)
+       ------------------------------------------------------------------------- */
+    #sidebar-left {
+      width: 250px;
+      min-width: 250px;
+      background: var(--sidebar-bg);
+      border-right: 1px solid var(--border-color);
+      padding: 20px 16px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      overflow-y: auto;
+    }
+
+    .profile-card {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+    .profile-avatar {
+      width: 34px; height: 34px; border-radius: 50%;
+      background: var(--accent-blue); color: #ffffff;
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 700; font-size: 14px;
+    }
+    .profile-name { font-weight: 700; font-size: 13px; color: var(--text-main); }
+
+    .nav-group {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+    .sidebar-nav-item {
+      padding: 8px 12px;
+      border-radius: 10px;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .sidebar-nav-item:hover { background: var(--pill-bg); color: var(--text-main); }
+    .sidebar-nav-item.active { background: var(--app-bg); color: var(--text-main); font-weight: 700; box-shadow: var(--shadow-sm); }
+
+    .history-sidebar-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin: 18px 8px 8px 10px;
+    }
+    .recents-label {
+      font-size: 11px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.6px;
+      color: var(--text-dim);
+    }
+    .btn-new-chat-pill {
+      background: var(--input-bg);
+      border: 1px solid var(--border-color);
+      color: var(--accent-blue);
+      padding: 3px 10px;
+      border-radius: 12px;
+      font-size: 10px;
+      font-weight: 800;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      transition: all 0.15s ease;
+    }
+    .btn-new-chat-pill:hover {
+      background: var(--accent-blue);
+      color: #ffffff;
+      border-color: var(--accent-blue);
+      transform: translateY(-1px);
+    }
+    .history-card-item {
+      padding: 9px 12px;
+      border-radius: 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      border: 1px solid transparent;
+      background: transparent;
+      position: relative;
+    }
+    .history-card-item:hover {
+      background: var(--pill-bg);
+      border-color: var(--border-color);
+    }
+    .history-card-item.active {
+      background: var(--app-bg);
+      border-color: var(--border-color);
+      border-left: 3px solid var(--accent-blue);
+      box-shadow: var(--shadow-sm);
+    }
+    .history-top-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+    }
+    .history-title {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--text-main);
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    .history-delete-btn {
+      font-size: 11px;
+      color: var(--text-dim);
+      opacity: 0;
+      transition: opacity 0.15s ease;
+      cursor: pointer;
+      background: none;
+      border: none;
+      padding: 0 4px;
+      border-radius: 4px;
+    }
+    .history-card-item:hover .history-delete-btn {
+      opacity: 0.7;
+    }
+    .history-delete-btn:hover {
+      opacity: 1 !important;
+      color: #ef4444;
+      background: #fee2e2;
+    }
+    .history-sub-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+    .history-snippet {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      max-width: 145px;
+      font-size: 11px;
+    }
+    .history-time {
+      font-size: 10px;
+      color: var(--text-dim);
+      flex-shrink: 0;
+    }
+
+    /* Pro Upgrade Box */
+    .pro-upgrade-box {
+      background: var(--app-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 16px;
+      padding: 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      box-shadow: var(--shadow-sm);
+      margin-top: 14px;
+    }
+    .pro-upgrade-title { font-size: 12px; font-weight: 700; color: var(--text-main); }
+    .pro-upgrade-desc { font-size: 11px; color: var(--text-muted); }
+    .btn-upgrade-blue {
+      background: var(--accent-blue);
+      color: #ffffff;
+      border: none;
+      padding: 8px 14px;
+      border-radius: 20px;
+      font-size: 11px;
+      font-weight: 700;
+      cursor: pointer;
+      text-align: center;
+      margin-top: 4px;
+    }
+    .btn-upgrade-blue:hover { background: var(--accent-blue-hover); }
+
+    /* -------------------------------------------------------------------------
+       MAIN WORKSPACE CONTENT (Welcome, Grid Cards, Tasks Table)
+       ------------------------------------------------------------------------- */
+    #main-content-area {
+      flex: 1;
+      padding: 28px 36px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+      position: relative;
+    }
+
+    /* Greeting Header */
+    .welcome-header-title {
+      font-size: 32px;
+      font-weight: 800;
+      color: var(--accent-blue);
+      letter-spacing: -0.5px;
+    }
+    .welcome-header-subtitle {
+      font-size: 26px;
+      font-weight: 700;
+      color: var(--text-muted);
+      margin-top: -4px;
+    }
+
+    /* Grid of 4 Cards (Yellow Post-It Note + AI Cards) */
+    .cards-grid-4 {
+      display: grid;
+      grid-template-columns: 1.2fr 1fr;
+      gap: 16px;
+    }
+
+    .card-item {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 20px;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      box-shadow: var(--shadow-sm);
+    }
+
+    /* Yellow Post-It Note Style Card */
+    .card-item.postit-yellow {
+      background: var(--yellow-postit-bg);
+      border-color: var(--yellow-postit-border);
+      color: var(--yellow-postit-text);
+    }
+    .postit-title {
+      font-size: 13px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .postit-list {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .postit-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    .card-title-sm { font-size: 12px; font-weight: 700; color: var(--text-muted); display: flex; align-items: center; gap: 6px; }
+    .card-body-heading { font-size: 15px; font-weight: 800; color: var(--text-main); }
+
+    /* Tasks & Triggers Table Section */
+    .tasks-section-container {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 20px;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .tasks-table-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+    .tasks-count-title { font-size: 15px; font-weight: 800; color: var(--text-main); }
+
+    .search-tasks-input {
+      background: var(--input-bg);
+      border: 1px solid var(--border-color);
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-size: 12px;
+      color: var(--text-main);
+      outline: none;
+      width: 220px;
+    }
+
+    .btn-prioritize {
+      background: var(--pill-bg);
+      border: 1px solid var(--accent-purple);
+      color: var(--accent-purple);
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    /* Tasks Rows */
+    .tasks-rows-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .task-row-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 14px;
+      background: var(--input-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 14px;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .task-row-item:hover { border-color: var(--accent-blue); }
+
+    .task-left-title { display: flex; align-items: center; gap: 10px; color: var(--text-main); font-weight: 700; }
+    .task-tags-group { display: flex; align-items: center; gap: 8px; }
+
+    .tag-pill { padding: 3px 10px; border-radius: 12px; font-size: 10px; font-weight: 700; }
+    .tag-pill.urgent { background: #fee2e2; color: #dc2626; }
+    .tag-pill.in-progress { background: #dbeafe; color: #2563eb; }
+    .tag-pill.by-today { background: #ffedd5; color: #c2410c; }
+    .tag-pill.by-tomorrow { background: #dcfce7; color: #15803d; }
+    .tag-pill.fire-btn { background: var(--accent-blue); color: #ffffff; cursor: pointer; }
+
+    /* Gemini-Style Chat Thread Container */
+    .gemini-chat-container {
+      background: var(--card-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 20px;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      box-shadow: var(--shadow-sm);
+    }
+    .gemini-chat-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--border-color);
+    }
+    .gemini-sparkle-icon {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 50%, #ec4899 100%);
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      font-weight: 800;
+      box-shadow: 0 4px 12px rgba(139, 92, 246, 0.3);
+    }
+    .btn-chat-tool {
+      background: var(--input-bg);
+      border: 1px solid var(--border-color);
+      color: var(--text-main);
+      padding: 5px 12px;
+      border-radius: 14px;
+      font-size: 11px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+    .btn-chat-tool:hover {
+      background: var(--pill-bg);
+      border-color: var(--accent-blue);
+      color: var(--accent-blue);
+    }
+    .gemini-messages-stream {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      min-height: 280px;
+      max-height: 520px;
+      overflow-y: auto;
+      padding-right: 6px;
+      scroll-behavior: smooth;
+    }
+    .gemini-messages-stream::-webkit-scrollbar {
+      width: 6px;
+    }
+    .gemini-messages-stream::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    .gemini-messages-stream::-webkit-scrollbar-thumb {
+      background: var(--border-color);
+      border-radius: 10px;
+    }
+    .gemini-turn {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      animation: fadeInTurn 0.25s ease;
+    }
+    @keyframes fadeInTurn {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .turn-avatar {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      font-weight: 800;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+    .turn-avatar.assistant-avatar {
+      background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+      color: #38bdf8;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+    }
+    [data-theme="dark"] .turn-avatar.assistant-avatar {
+      background: linear-gradient(135deg, #334155 0%, #1e293b 100%);
+      color: #67e8f9;
+    }
+    .turn-avatar.user-avatar {
+      background: linear-gradient(135deg, #0284c7 0%, #38bdf8 100%);
+      color: #ffffff;
+      box-shadow: 0 4px 10px rgba(2, 132, 199, 0.25);
+    }
+    .turn-body {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      min-width: 0;
+    }
+    .turn-header {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .turn-sender-name {
+      font-size: 12px;
+      font-weight: 800;
+      color: var(--text-main);
+    }
+    .turn-time {
+      font-size: 10px;
+      color: var(--text-dim);
+      font-weight: 500;
+    }
+    .turn-text-content {
+      font-size: 13px;
+      line-height: 1.6;
+      color: var(--text-main);
+      word-break: break-word;
+    }
+    .assistant-turn .turn-text-content {
+      background: var(--input-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 16px;
+      padding: 14px 18px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.02);
+    }
+    .user-turn {
+      flex-direction: row-reverse;
+    }
+    .user-turn .turn-body {
+      align-items: flex-end;
+    }
+    .user-turn .turn-text-content {
+      background: #eff6ff;
+      border: 1px solid #bfdbfe;
+      color: #1e3a8a;
+      border-radius: 16px;
+      padding: 12px 16px;
+      font-weight: 600;
+      max-width: 80%;
+    }
+    [data-theme="dark"] .user-turn .turn-text-content {
+      background: #1e293b;
+      border-color: #3b82f6;
+      color: #93c5fd;
+    }
+    .turn-rationale-box {
+      display: none;
+      font-size: 11px;
+      color: var(--text-muted);
+      font-family: 'JetBrains Mono', monospace;
+      background: var(--input-bg);
+      border: 1px solid var(--border-color);
+      border-left: 3px solid var(--accent-blue);
+      padding: 10px 14px;
+      border-radius: 8px;
+      line-height: 1.5;
+      margin-top: 8px;
+      animation: fadeInTurn 0.2s ease;
+    }
+    .turn-rationale-box.open {
+      display: block;
+    }
+    .turn-dots-btn {
+      background: none;
+      border: 1px solid transparent;
+      color: var(--text-dim);
+      font-size: 16px;
+      font-weight: 800;
+      cursor: pointer;
+      padding: 2px 7px;
+      border-radius: 6px;
+      line-height: 1;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.15s ease;
+    }
+    .turn-dots-btn:hover {
+      background: var(--pill-bg);
+      color: var(--text-main);
+      border-color: var(--border-color);
+    }
+    .turn-dots-btn.active {
+      background: var(--pill-bg);
+      color: var(--accent-blue);
+      border-color: var(--accent-blue);
+    }
+    .turn-actions-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-top: 4px;
+    }
+    .turn-cta-chips {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .chip-btn-primary {
+      background: #2563eb;
+      color: #ffffff;
+      border: 1px solid #1d4ed8;
+      padding: 5px 14px;
+      border-radius: 20px;
+      font-size: 11px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      box-shadow: 0 2px 6px rgba(37, 99, 235, 0.2);
+    }
+    .chip-btn-primary:hover {
+      background: #1d4ed8;
+      transform: translateY(-1px);
+    }
+    .chip-btn-outline {
+      background: #faf5ff;
+      color: #7c3aed;
+      border: 1.5px solid #c084fc;
+      padding: 5px 13px;
+      border-radius: 20px;
+      font-size: 11px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+    .chip-btn-outline:hover {
+      background: #f3e8ff;
+      border-color: #9333ea;
+      transform: translateY(-1px);
+    }
+    [data-theme="dark"] .chip-btn-outline {
+      background: #2e1065;
+      color: #d8b4fe;
+      border-color: #9333ea;
+    }
+    .chip-btn-stop {
+      background: var(--input-bg);
+      color: var(--text-muted);
+      border: 1px solid var(--border-color);
+      padding: 5px 12px;
+      border-radius: 20px;
+      font-size: 11px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+    .chip-btn-stop:hover {
+      background: #fee2e2;
+      color: #dc2626;
+      border-color: #fca5a5;
+    }
+    .outbound-badge {
+      font-size: 10px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      background: #eff6ff;
+      color: #2563eb;
+      border: 1px solid #bfdbfe;
+      padding: 2px 8px;
+      border-radius: 6px;
+      display: inline-block;
+    }
+    [data-theme="dark"] .outbound-badge {
+      background: #1e293b;
+      color: #60a5fa;
+      border-color: #3b82f6;
+    }
+    .copy-small-btn {
+      background: none;
+      border: none;
+      color: var(--text-dim);
+      font-size: 11px;
+      font-weight: 600;
+      cursor: pointer;
+      padding: 2px 6px;
+      border-radius: 4px;
+    }
+    .copy-small-btn:hover {
+      color: var(--text-main);
+      background: var(--pill-bg);
+    }
+    .turn-utility-icons {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .turn-icon-btn {
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      background: var(--input-bg);
+      border: 1px solid var(--border-color);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      cursor: pointer;
+      text-decoration: none;
+      color: var(--text-muted);
+      transition: all 0.15s ease;
+    }
+    .turn-icon-btn:hover {
+      background: var(--pill-bg);
+      color: var(--text-main);
+      transform: scale(1.1);
+    }
+    .turn-icon-btn.whatsapp:hover {
+      background: #25D366;
+      color: #ffffff;
+      border-color: #25D366;
+    }
+
+    /* Gemini Shimmer Thinking State */
+    .gemini-shimmer-bar {
+      background: linear-gradient(90deg, #f1f5f9 25%, #e2e8f0 50%, #f1f5f9 75%);
+      background-size: 200% 100%;
+      animation: shimmerAnim 1.5s infinite;
+      border-radius: 12px;
+      padding: 10px 14px;
+      font-size: 12px;
+      color: var(--text-muted);
+      font-style: italic;
+    }
+    [data-theme="dark"] .gemini-shimmer-bar {
+      background: linear-gradient(90deg, #1e293b 25%, #334155 50%, #1e293b 75%);
+      background-size: 200% 100%;
+      color: #94a3b8;
+    }
+    @keyframes shimmerAnim {
+      0% { background-position: 200% 0; }
+      100% { background-position: -200% 0; }
+    }
+
+    /* Merchant Dropdown Select (100% Readable Options) */
+    select.merchant-select-stratify, select option {
+      padding: 8px 12px;
+      background: var(--app-bg);
+      border: 1px solid var(--border-color);
+      color: var(--text-main);
+      border-radius: 10px;
+      font-size: 12px;
+      font-weight: 600;
+      outline: none;
+      cursor: pointer;
+    }
+    select option {
+      background-color: #1e293b !important;
+      color: #ffffff !important;
+      padding: 10px !important;
+    }
+
+    /* -------------------------------------------------------------------------
+       BOTTOM STICKY DOCK & FLOATING PROMPT CAPSULE BAR
+       ------------------------------------------------------------------------- */
+    .bottom-dock-container {
+      position: sticky;
+      bottom: 0;
+      background: var(--app-bg);
+      padding: 10px 0 4px 0;
+      z-index: 50;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .bottom-floating-search-bar {
+      background: var(--app-bg);
+      border: 1px solid var(--border-color);
+      padding: 10px 16px;
+      border-radius: 30px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      box-shadow: var(--shadow-md);
+      margin-top: 0;
+    }
+    .bottom-floating-search-bar input {
+      flex: 1;
+      background: transparent;
+      border: none;
+      outline: none;
+      font-size: 13px;
+      color: var(--text-main);
+    }
+    .btn-send-round {
+      width: 32px; height: 32px; border-radius: 50%;
+      background: var(--accent-blue); color: #ffffff;
+      border: none; cursor: pointer; font-size: 13px;
+      display: flex; align-items: center; justify-content: center;
+    }
+
+    /* Quick Keywords Bar */
+    .quick-keywords-bar {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-top: 14px;
+      margin-bottom: 2px;
+      padding: 0 4px;
+    }
+    .quick-label {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--text-dim);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-right: 2px;
+    }
+    .keyword-pill {
+      background: var(--pill-bg);
+      border: 1px solid var(--border-color);
+      color: var(--text-main);
+      padding: 6px 14px;
+      border-radius: 18px;
+      font-size: 11px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      white-space: nowrap;
+    }
+    .keyword-pill:hover {
+      transform: translateY(-1px);
+      box-shadow: var(--shadow-sm);
+    }
+    .keyword-pill:active {
+      transform: translateY(0);
+    }
+    .keyword-pill.pill-primary {
+      background: #2563eb;
+      color: #ffffff;
+      border: 1px solid #1d4ed8;
+      box-shadow: 0 2px 6px rgba(37, 99, 235, 0.25);
+    }
+    .keyword-pill.pill-primary:hover {
+      background: #1d4ed8;
+      color: #ffffff;
+    }
+    .keyword-pill.pill-purple {
+      background: #faf5ff;
+      color: #7c3aed;
+      border: 1.5px solid #c084fc;
+    }
+    .keyword-pill.pill-purple:hover {
+      background: #f3e8ff;
+      border-color: #9333ea;
+      color: #6b21a8;
+    }
+    [data-theme="dark"] .keyword-pill.pill-purple {
+      background: #2e1065;
+      color: #d8b4fe;
+      border-color: #9333ea;
+    }
+    .keyword-pill.pill-stop {
+      background: #fef2f2;
+      color: #dc2626;
+      border: 1px solid #fecaca;
+    }
+    .keyword-pill.pill-stop:hover {
+      background: #fee2e2;
+      border-color: #f87171;
+    }
+    [data-theme="dark"] .keyword-pill.pill-stop {
+      background: #450a0a;
+      color: #fca5a5;
+      border-color: #991b1b;
+    }
+
+    /* Modals & Toasts */
+    .modal-backdrop {
+      position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(15, 23, 42, 0.6); backdrop-filter: blur(8px);
+      display: flex; align-items: center; justify-content: center;
+      z-index: 1000; opacity: 0; pointer-events: none; transition: opacity 0.2s ease;
+    }
+    .modal-backdrop.open { opacity: 1; pointer-events: auto; }
+    .modal-box {
+      background: var(--app-bg); border: 1px solid var(--border-color);
+      border-radius: 24px; width: 500px; max-width: 92vw; padding: 24px;
+      box-shadow: var(--shadow-md); color: var(--text-main);
+      display: flex; flex-direction: column; gap: 16px;
+    }
+    .modal-header { display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid var(--border-color); padding-bottom: 10px; }
+    .modal-title { font-size: 15px; font-weight: 800; }
+    .form-group { display: flex; flex-direction: column; gap: 6px; }
+    .form-label { font-size: 11px; font-weight: 800; text-transform: uppercase; color: var(--text-muted); }
+    .form-input, .form-select { background: var(--input-bg); border: 1px solid var(--border-color); padding: 8px 12px; border-radius: 10px; color: var(--text-main); font-size: 13px; outline: none; }
+    .modal-footer { display: flex; justify-content: flex-end; gap: 8px; border-top: 1px solid var(--border-color); padding-top: 12px; }
+
+    #toast-notification {
+      position: fixed; bottom: 24px; right: 24px; background: var(--accent-blue); color: #ffffff;
+      padding: 10px 18px; border-radius: 20px; font-size: 12px; font-weight: 700;
+      box-shadow: var(--shadow-md); z-index: 1100; transform: translateY(100px); opacity: 0; transition: all 0.25s ease;
+    }
+    #toast-notification.show { transform: translateY(0); opacity: 1; }
+  </style>
+</head>
+<body>
+
+<!-- Top Floating Tag Pills Bar -->
+<div class="top-floating-pills-bar">
+  <div class="top-pills-group">
+    <span class="top-pill">WEB APP</span>
+    <span class="top-pill highlight">TASK AUTOMATION</span>
+    <span class="top-pill">AI POWERED</span>
+  </div>
+  <div class="top-pills-group">
+    <span class="top-pill">TEAM PRODUCTIVITY</span>
+    <span class="top-pill highlight">SMART TASK PRIORITIZATION</span>
+  </div>
+</div>
+
+<!-- macOS App Container Frame -->
+<div id="app-container">
+
+  <!-- macOS Window Top Header Chrome -->
+  <div class="mac-browser-header">
+    <div class="mac-window-controls">
+      <div class="mac-dot red"></div>
+      <div class="mac-dot yellow"></div>
+      <div class="mac-dot green"></div>
+      <span style="margin-left: 12px; font-size: 12px; color: var(--text-dim);">‹ ›</span>
+    </div>
+
+    <div class="mac-url-bar">
+      <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle;margin-right:4px;"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>stratify.com
+    </div>
+
+    <div class="mac-right-actions">
+      <button type="button" class="theme-switch-btn" id="theme-btn" onclick="toggleTheme()">Light Mode</button>
+      <button type="button" class="theme-switch-btn" onclick="openSettingsModal()">Settings</button>
+    </div>
+  </div>
+
+  <!-- Workspace Split (Sidebar + Content) -->
+  <div class="mac-workspace-split">
+    
+    <!-- Left Sidebar Navigation -->
+    <div id="sidebar-left">
+      <div>
+        <!-- Profile Card -->
+        <div class="profile-card">
+          <div class="profile-avatar" id="sidebar-profile-avatar">M</div>
+          <div>
+            <div class="profile-name" id="sidebar-profile-name">Dr. Meera Sharma</div>
+            <div style="font-size: 10px; color: var(--text-muted);" id="sidebar-category-label">Dental Clinic Partner · Delhi</div>
+          </div>
+        </div>
+
+        <!-- Navigation Group -->
+        <div class="nav-group">
+          <div class="sidebar-nav-item active" onclick="setActiveNav(this)">
+            <span>Home</span>
+          </div>
+          <div class="sidebar-nav-item" onclick="startNewSession(); setActiveNav(this)">
+            <span>New Chat</span>
+          </div>
+          <div class="sidebar-nav-item" onclick="openModal('context-modal'); setActiveNav(this)">
+            <span>My Tasks / Context</span>
+          </div>
+          <div class="sidebar-nav-item" onclick="openModal('groq-modal'); setActiveNav(this)">
+            <span>My Meetings / Engine</span>
+          </div>
+          <div class="sidebar-nav-item" onclick="openModal('inspector-modal'); setActiveNav(this)">
+            <span>Saved Files / Payloads</span>
+          </div>
+        </div>
+
+        <!-- Live Dynamic Conversation History -->
+        <div class="history-sidebar-header">
+          <div class="recents-label">Recent Chats</div>
+          <button type="button" class="btn-new-chat-pill" onclick="startNewSession()" title="Start New Chat Session">+ New</button>
+        </div>
+        <div class="nav-group" id="history-items-container" style="gap:6px;">
+          <!-- Rendered dynamically -->
+        </div>
+      </div>
+
+      <!-- Settings at bottom -->
+      <div class="sidebar-nav-item" onclick="openSettingsModal()" style="margin-top:16px;">
+        <span>Settings</span>
+      </div>
+    </div>
+
+
+    <!-- Main Workspace Content Area -->
+    <div id="main-content-area">
+      
+      <!-- Greeting Header -->
+      <div>
+        <div class="welcome-header-title" id="welcome-user-heading">Welcome, Dr. Meera</div>
+        <div class="welcome-header-subtitle">How can I help you today?</div>
+      </div>
+
+      <!-- Grid of 4 Cards -->
+      <div class="cards-grid-4">
+        
+        <!-- Post-It Yellow Card (Active Merchant Context & Triggers) -->
+        <div class="card-item postit-yellow">
+          <div class="postit-title">
+            <span>Active Merchant Context &amp; Triggers</span>
+            <span>&#8942;</span>
+          </div>
+          <div class="postit-list" id="yellow-card-list">
+            <!-- Rendered dynamically per business category -->
+          </div>
+        </div>
+
+        <!-- Project Vera Merchant Engine Overview Card -->
+        <div class="card-item" id="engine-card-box">
+          <!-- Rendered dynamically per business category -->
+        </div>
+
+      </div>
+
+
+      <!-- Tasks & Triggers Interactive Table -->
+      <div class="tasks-section-container">
+        
+        <div class="tasks-table-header">
+          <div style="display:flex; align-items:center; gap:12px;">
+            <div class="tasks-count-title">My Tasks / Available Triggers</div>
+            <!-- Merchant Dropdown Picker -->
+            <select class="merchant-select-stratify" id="merchant-select" onchange="onMerchantChange()">
+              <option value="m_001_drmeera_dentist_delhi">Dr. Meera's Dental Clinic (Dentist · Delhi)</option>
+              <option value="m_002_bharat_dentist_mumbai">Bharat Dental Care (Dentist · Mumbai)</option>
+              <option value="m_003_studio11_salon_hyderabad">Studio11 Family Salon (Salon · Hyderabad)</option>
+              <option value="m_004_glamour_salon_pune">Glamour Lounge Spa & Salon (Salon · Pune)</option>
+              <option value="m_005_pizzajunction_restaurant_delhi">SK Pizza Junction (Restaurant · Delhi)</option>
+              <option value="m_006_southindiancafe_restaurant_bangalore">Mylari South Indian Cafe (Restaurant · Bangalore)</option>
+              <option value="m_007_powerhouse_gym_bangalore">PowerHouse Fitness (Gym · Bangalore)</option>
+              <option value="m_008_zenyoga_gym_chennai">Zen Yoga Studio (Gym · Chennai)</option>
+              <option value="m_009_apollo_pharmacy_jaipur">Apollo Health Plus Pharmacy (Pharmacy · Jaipur)</option>
+              <option value="m_010_sunrisepharm_pharmacy_lucknow">Sunrise Medicos (Pharmacy · Lucknow)</option>
+            </select>
+          </div>
+
+          <div style="display:flex; align-items:center; gap:8px;">
+            <input type="text" class="search-tasks-input" placeholder="Search for name..." />
+            <button type="button" class="btn-prioritize" onclick="fireTrigger()">Prioritize Tasks</button>
+          </div>
+        </div>
+
+        <!-- Task Rows List -->
+        <div class="tasks-rows-list" id="tasks-rows-container">
+          <!-- Rendered dynamically -->
+        </div>
+
+      </div>
+
+
+      <!-- Gemini-Style Multi-Turn Chat Stream Container -->
+      <div class="gemini-chat-container">
+        
+        <!-- Chat Header -->
+        <div class="gemini-chat-header">
+          <div style="display:flex; align-items:center; gap:8px;">
+            <div class="gemini-sparkle-icon">✦</div>
+            <div>
+              <div style="font-size:13px; font-weight:800; color:var(--text-main);" id="chat-thread-title">Vera AI Live Dialogue Stream</div>
+              <div style="font-size:10px; color:var(--text-muted);" id="chat-thread-subtitle">Multi-Turn WhatsApp Outreach · Complete Conversation History Preserved</div>
+            </div>
+          </div>
+          <div style="display:flex; align-items:center; gap:8px;">
+            <button type="button" class="btn-chat-tool" onclick="startNewSession()" title="Start New Chat Session">
+              <span>+ New Chat</span>
+            </button>
+            <button type="button" class="btn-chat-tool" onclick="copyEntireThread()" title="Copy Full Conversation History">
+              <span>Copy All</span>
+            </button>
+            <button type="button" class="btn-chat-tool" onclick="clearCurrentThread()" title="Clear Messages">
+              <span>Clear</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Scrollable Message Stream -->
+        <div class="gemini-messages-stream" id="gemini-messages-stream">
+          <!-- Dynamically appended multi-turn message history -->
+        </div>
+
+      </div>
+
+      <!-- Sticky Bottom Dock with Key Words & Search Input Capsule -->
+      <div class="bottom-dock-container">
+        <div class="quick-keywords-bar">
+          <span class="quick-label">Click to Reply:</span>
+          <button type="button" class="keyword-pill pill-primary" onclick="sendQuickReply('Reply YES')">Reply YES</button>
+          <button type="button" class="keyword-pill pill-purple" onclick="sendQuickReply('Give me the details')">Give me the details</button>
+          <button type="button" class="keyword-pill pill-purple" onclick="sendQuickReply('Yes, what next?')">Yes, what next?</button>
+          <button type="button" class="keyword-pill" onclick="sendQuickReply('Ok lets do it. Whats next?')">Ok lets do it. Whats next?</button>
+          <button type="button" class="keyword-pill" onclick="sendQuickReply('Yes, send details')">Yes, send details</button>
+          <button type="button" class="keyword-pill pill-stop" onclick="sendQuickReply('Reply STOP')">Reply STOP</button>
+        </div>
+
+        <form class="bottom-floating-search-bar" onsubmit="handleUserSend(event)">
+          <input type="text" id="user-input" placeholder="Type your reply, or click any button above..." autocomplete="off" />
+          <button type="submit" class="btn-send-round">Send</button>
+        </form>
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+
+
+<!-- =======================================================================
+     MODALS
+     ======================================================================= -->
+<div class="modal-backdrop" id="settings-modal">
+  <div class="modal-box">
+    <div class="modal-header">
+      <div class="modal-title">ENGINE CONFIGURATION</div>
+      <span style="cursor:pointer;" onclick="closeModal('settings-modal')">✕</span>
+    </div>
+    <div class="form-group">
+      <label class="form-label">Groq API Key</label>
+      <input type="password" id="cfg-groq-key" class="form-input" placeholder="Enter your Groq API Key (optional)" value="" />
+    </div>
+    <div class="form-group">
+      <label class="form-label">LLM Provider & Model</label>
+      <select id="cfg-model" class="form-select">
+        <option value="openai/gpt-oss-120b">Groq — openai/gpt-oss-120b (Recommended)</option>
+        <option value="llama-3.3-70b-versatile">Groq — llama-3.3-70b-versatile</option>
+      </select>
+    </div>
+    <div class="modal-footer">
+      <button class="btn-upgrade-blue" onclick="closeModal('settings-modal'); showToast('Config saved!')">Save Config</button>
+    </div>
+  </div>
+</div>
+
+<div class="modal-backdrop" id="inspector-modal">
+  <div class="modal-box">
+    <div class="modal-header">
+      <div class="modal-title">PAYLOAD INSPECTOR</div>
+      <span style="cursor:pointer;" onclick="closeModal('inspector-modal')">✕</span>
+    </div>
+    <pre id="modal-json-content" style="background:var(--input-bg); padding:12px; border-radius:10px; font-family:'JetBrains Mono'; font-size:11px;">{ "engine": "Stratify Vera AI", "status": "active" }</pre>
+    <div class="modal-footer">
+      <button class="btn-upgrade-blue" onclick="closeModal('inspector-modal')">Close</button>
+    </div>
+  </div>
+</div>
+
+<div class="modal-backdrop" id="context-modal">
+  <div class="modal-box">
+    <div class="modal-header">
+      <div class="modal-title">MY TASKS / CONTEXT ENGINE</div>
+      <span style="cursor:pointer;" onclick="closeModal('context-modal')">✕</span>
+    </div>
+    <div style="font-size:13px; line-height:1.6;">
+      <p><strong>1. Category Baseline</strong></p>
+      <p><strong>2. Merchant Identity</strong></p>
+      <p><strong>3. Trigger Payload</strong></p>
+      <p><strong>4. Customer State</strong></p>
+    </div>
+    <div class="modal-footer">
+      <button class="btn-upgrade-blue" onclick="closeModal('context-modal')">Close</button>
+    </div>
+  </div>
+</div>
+
+<div class="modal-backdrop" id="groq-modal">
+  <div class="modal-box">
+    <div class="modal-header">
+      <div class="modal-title">ENGINE STATUS</div>
+      <span style="cursor:pointer;" onclick="closeModal('groq-modal')">✕</span>
+    </div>
+    <div style="font-size:13px;">Groq <code>openai/gpt-oss-120b</code> ~450ms latency</div>
+    <div class="modal-footer">
+      <button class="btn-upgrade-blue" onclick="closeModal('groq-modal')">Close</button>
+    </div>
+  </div>
+</div>
+
+<div id="toast-notification">Toast Message</div>
+
+<script>
+  let currentMerchantId = "m_001_drmeera_dentist_delhi";
+  let currentTriggerKind = "research_digest";
+  let currentConvId = "conv_demo_" + Date.now();
+  let turnCount = 1;
+  let currentActionData = null;
+
+  // Active Multi-Turn Conversations Dictionary: convId -> { convId, merchantId, title, kind, time, messages: [] }
+  let activeConversations = {};
+
+  // Sidebar Conversation History Log: [ { convId, title, snippet, time, kind, merchantId } ]
+  let historyLog = [];
+
+  const PRESET_DATA = {
+    "m_001_drmeera_dentist_delhi": { name: "Dr. Meera's Dental Clinic", displayName: "Dr. Meera Sharma", welcomeName: "Dr. Meera", avatarLetter: "M", category: "dentists", owner_first_name: "Meera", city: "Delhi", label: "Dental Clinic Partner · Delhi" },
+    "m_002_bharat_dentist_mumbai": { name: "Bharat Dental Care", displayName: "Dr. Bharat Verma", welcomeName: "Dr. Bharat", avatarLetter: "B", category: "dentists", owner_first_name: "Bharat", city: "Mumbai", label: "Dentist Partner · Mumbai" },
+    "m_003_studio11_salon_hyderabad": { name: "Studio11 Family Salon", displayName: "Priya Lakshmi", welcomeName: "Priya", avatarLetter: "P", category: "salons", owner_first_name: "Lakshmi", city: "Hyderabad", label: "Salon Partner · Hyderabad" },
+    "m_004_glamour_salon_pune": { name: "Glamour Lounge Spa & Salon", displayName: "Anjali Deshmukh", welcomeName: "Anjali", avatarLetter: "A", category: "salons", owner_first_name: "Anjali", city: "Pune", label: "Spa Partner · Pune" },
+    "m_005_pizzajunction_restaurant_delhi": { name: "SK Pizza Junction", displayName: "Sumit Kapoor", welcomeName: "Sumit", avatarLetter: "S", category: "restaurants", owner_first_name: "Suresh", city: "Delhi", label: "Restaurant Partner · Delhi" },
+    "m_006_southindiancafe_restaurant_bangalore": { name: "Mylari South Indian Cafe", displayName: "Suresh Gowda", welcomeName: "Suresh", avatarLetter: "S", category: "restaurants", owner_first_name: "Suresh", city: "Bangalore", label: "Cafe Partner · Bangalore" },
+    "m_007_powerhouse_gym_bangalore": { name: "PowerHouse Fitness", displayName: "Karthik Reddy", welcomeName: "Karthik", avatarLetter: "K", category: "gyms", owner_first_name: "Karthik", city: "Bangalore", label: "Gym Partner · Bangalore" },
+    "m_008_zenyoga_gym_chennai": { name: "Zen Yoga Studio", displayName: "Padma Sundaram", welcomeName: "Padma", avatarLetter: "P", category: "gyms", owner_first_name: "Padma", city: "Chennai", label: "Fitness Partner · Chennai" },
+    "m_009_apollo_pharmacy_jaipur": { name: "Apollo Health Plus Pharmacy", displayName: "Ramesh Sharma", welcomeName: "Ramesh", avatarLetter: "R", category: "pharmacies", owner_first_name: "Ramesh", city: "Jaipur", label: "Pharmacy Partner · Jaipur" },
+    "m_010_sunrisepharm_pharmacy_lucknow": { name: "Sunrise Medicos", displayName: "Vikas Shukla", welcomeName: "Vikas", avatarLetter: "V", category: "pharmacies", owner_first_name: "Vikas", city: "Lucknow", label: "Pharmacy Partner · Lucknow" }
+  };
+
+  /* -------------------------------------------------------------------------
+     STORAGE PERSISTENCE (Gemini-style persistent state)
+     ------------------------------------------------------------------------- */
+  function persistToStorage() {
+    try {
+      localStorage.setItem("magicpin_conversations_gemini_v1", JSON.stringify(activeConversations));
+      localStorage.setItem("magicpin_history_gemini_v1", JSON.stringify(historyLog));
+      localStorage.setItem("magicpin_current_conv_v1", currentConvId);
+      localStorage.setItem("magicpin_current_merchant_v1", currentMerchantId);
+    } catch (e) {
+      console.warn("Storage persist failed:", e);
+    }
+  }
+
+  function seedDefaultConversations() {
+    const timeNow = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+
+    // 1. Dr. Meera Multi-Turn Thread
+    const id1 = "conv_seed_meera_fluoride";
+    activeConversations[id1] = {
+      convId: id1,
+      merchantId: "m_001_drmeera_dentist_delhi",
+      title: "Dr. Meera — Fluoride Digest",
+      kind: "research_digest",
+      time: timeNow,
+      messages: [
+        {
+          role: "assistant",
+          senderName: "magicpin AI · Vera Engine",
+          avatarLetter: "✦",
+          time: timeNow,
+          turn: 1,
+          text: "Dr. Meera, JIDA's Oct issue has landed. One item directly relevant to your practice — a 2,100-patient trial showed that fluoride varnish application reduces caries incidence by 67% compared to standard rinse protocols. Worth a 2-minute read. Want me to pull the full summary and draft a patient-education WhatsApp message you can send to your recall list today?",
+          rationale: "Research digest tailored for dentist with trial sample size (n=2,100), source citation, and effort-externalization CTA."
+        },
+        {
+          role: "user",
+          senderName: "Dr. Meera Sharma",
+          avatarLetter: "M",
+          time: timeNow,
+          turn: 2,
+          text: "Give me the details",
+          rationale: null
+        },
+        {
+          role: "assistant",
+          senderName: "magicpin AI · Vera Engine",
+          avatarLetter: "✦",
+          time: timeNow,
+          turn: 2,
+          text: "Samajh gayi Dr. Meera. Clinical trial highlights: 5% Sodium Fluoride (22,600 ppm) applied semiannually demonstrated sustained tooth remineralization with 98% patient acceptance. I have generated a 1-click WhatsApp educational broadcast template for your 412 recall patients with your direct clinic booking link. Reply YES to dispatch or Reply STOP to exit.",
+          rationale: "Deep-dive clinical parameters delivered upon explicit merchant inquiry with single binary confirmation CTA."
+        }
+      ]
+    };
+
+    // 2. Dr. Bharat Multi-Turn Thread
+    const id2 = "conv_seed_bharat_recall";
+    activeConversations[id2] = {
+      convId: id2,
+      merchantId: "m_002_bharat_dentist_mumbai",
+      title: "Dr. Bharat — Implant Checkup Recall",
+      kind: "recall_due",
+      time: timeNow,
+      messages: [
+        {
+          role: "assistant",
+          senderName: "magicpin AI · Vera Engine",
+          avatarLetter: "✦",
+          time: timeNow,
+          turn: 1,
+          text: "Dr. Bharat, 18 patients from your Q3 implant consult list are due for their 6-month osseointegration check-up. We drafted a personalized WhatsApp recall message highlighting digital OPG scan availability at your Bandra clinic. Want me to queue this out to these 18 patients today?",
+          rationale: "Recall trigger targeting high-value dental implant cohort with local branch convenience anchor."
+        },
+        {
+          role: "user",
+          senderName: "Dr. Bharat Verma",
+          avatarLetter: "B",
+          time: timeNow,
+          turn: 2,
+          text: "Yes, what next?",
+          rationale: null
+        },
+        {
+          role: "assistant",
+          senderName: "magicpin AI · Vera Engine",
+          avatarLetter: "✦",
+          time: timeNow,
+          turn: 2,
+          text: "Broadcast queued for approval! 18 personalized messages will be dispatched via WhatsApp Business API between 4:00 PM - 5:30 PM. Each message includes your 1-click appointment booking link. I'll alert you the moment the first confirmation arrives.",
+          rationale: "Operational confirmation detailing dispatch timeline and auto-tracking webhook."
+        }
+      ]
+    };
+
+    // 3. Mylari Cafe Bangalore
+    const id3 = "conv_seed_mylari_thali";
+    activeConversations[id3] = {
+      convId: id3,
+      merchantId: "m_006_southindiancafe_restaurant_bangalore",
+      title: "Mylari Cafe — Repeat Diner Winback",
+      kind: "recall_due",
+      time: timeNow,
+      messages: [
+        {
+          role: "assistant",
+          senderName: "magicpin AI · Vera Engine",
+          avatarLetter: "✦",
+          time: timeNow,
+          turn: 1,
+          text: "Namaskara Suresh-ji! Last month 142 repeat diners visited Mylari South Indian Cafe during lunch hours. This week shows a 18% lull in weekday footfall. We can trigger a special Filter Coffee + Benne Dosa midday combo offer via WhatsApp to your 350 top loyalty patrons. Shall I launch the campaign?",
+          rationale: "Footfall drop alert with high-margin signature combo hook for Bangalore South Indian cafe."
+        }
+      ]
+    };
+
+    // 4. Studio11 Family Salon Hyderabad
+    const id4 = "conv_seed_studio11_trend";
+    activeConversations[id4] = {
+      convId: id4,
+      merchantId: "m_003_studio11_salon_hyderabad",
+      title: "Priya — Balayage & Spa Trend",
+      kind: "research_digest",
+      time: timeNow,
+      messages: [
+        {
+          role: "assistant",
+          senderName: "magicpin AI · Vera Engine",
+          avatarLetter: "✦",
+          time: timeNow,
+          turn: 1,
+          text: "Hi Priya! Weekend salon searches for 'Balayage & Keratin Spa' in Jubilee Hills surged by 34% this week. Your competitors are running ₹1,999 combo packages. I've prepared a draft offer for your Studio11 Instagram and WhatsApp status to capture this weekend's bookings. Would you like to review the draft?",
+          rationale: "Locality trend spike alert with competitor price anchoring for premium salon."
+        }
+      ]
+    };
+
+    historyLog = [
+      { convId: id1, title: "Dr. Meera — Fluoride Digest", snippet: "Samajh gayi Dr. Meera. Clinical trial highlights...", time: timeNow, kind: "research_digest", merchantId: "m_001_drmeera_dentist_delhi" },
+      { convId: id2, title: "Dr. Bharat — Implant Checkup Recall", snippet: "Broadcast queued for approval! 18 personalized...", time: timeNow, kind: "recall_due", merchantId: "m_002_bharat_dentist_mumbai" },
+      { convId: id3, title: "Mylari Cafe — Repeat Diner Winback", snippet: "Namaskara Suresh-ji! Last month 142 repeat...", time: timeNow, kind: "recall_due", merchantId: "m_006_southindiancafe_restaurant_bangalore" },
+      { convId: id4, title: "Priya — Balayage & Spa Trend", snippet: "Hi Priya! Weekend salon searches for 'Balayage...", time: timeNow, kind: "research_digest", merchantId: "m_003_studio11_salon_hyderabad" }
+    ];
+
+    currentConvId = id1;
+    currentMerchantId = "m_001_drmeera_dentist_delhi";
+    persistToStorage();
+  }
+
+  function initStorage() {
+    try {
+      const savedConvs = localStorage.getItem("magicpin_conversations_gemini_v1");
+      const savedHist = localStorage.getItem("magicpin_history_gemini_v1");
+      const savedCurrent = localStorage.getItem("magicpin_current_conv_v1");
+      const savedMId = localStorage.getItem("magicpin_current_merchant_v1");
+
+      if (savedConvs && savedHist) {
+        activeConversations = JSON.parse(savedConvs);
+        historyLog = JSON.parse(savedHist);
+        if (savedCurrent && activeConversations[savedCurrent]) {
+          currentConvId = savedCurrent;
+        } else if (historyLog.length > 0) {
+          currentConvId = historyLog[0].convId;
+        }
+        if (savedMId && PRESET_DATA[savedMId]) {
+          currentMerchantId = savedMId;
+        }
+      }
+    } catch (e) {
+      console.warn("Error reading storage:", e);
+    }
+
+    if (!historyLog || historyLog.length === 0 || !activeConversations[currentConvId]) {
+      seedDefaultConversations();
+    }
+  }
+
+  /* -------------------------------------------------------------------------
+     CONVERSATION & THREAD MANAGEMENT
+     ------------------------------------------------------------------------- */
+  function getOrCreateConversation(convId, merchantId, title, kind) {
+    if (!activeConversations[convId]) {
+      activeConversations[convId] = {
+        convId: convId,
+        merchantId: merchantId || currentMerchantId,
+        title: title || "New Conversation",
+        kind: kind || "research_digest",
+        time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+        messages: []
+      };
+    }
+    return activeConversations[convId];
+  }
+
+  function appendMessageToThread(convId, role, text, rationale, options = {}) {
+    const conv = getOrCreateConversation(convId, currentMerchantId);
+    const mInfo = PRESET_DATA[conv.merchantId || currentMerchantId] || { displayName: "Merchant", avatarLetter: "M" };
+    const msg = {
+      role: role,
+      text: text,
+      rationale: rationale || null,
+      time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+      senderName: role === 'assistant' ? 'magicpin AI · Vera Engine' : (mInfo.displayName || 'You'),
+      avatarLetter: role === 'assistant' ? '✦' : (mInfo.avatarLetter || 'M'),
+      turn: options.turn || (conv.messages.length + 1)
+    };
+    conv.messages.push(msg);
+    persistToStorage();
+    renderCurrentConversation();
+    return msg;
+  }
+
+  function renderCurrentConversation() {
+    const stream = document.getElementById("gemini-messages-stream");
+    const threadTitle = document.getElementById("chat-thread-title");
+    const threadSubtitle = document.getElementById("chat-thread-subtitle");
+    if (!stream) return;
+
+    const conv = activeConversations[currentConvId];
+    const mInfo = PRESET_DATA[conv ? conv.merchantId : currentMerchantId] || { displayName: "Merchant", name: "Business" };
+
+    if (threadTitle) {
+      threadTitle.innerText = conv && conv.title ? conv.title : `${mInfo.displayName} — Live Chat`;
+    }
+    if (threadSubtitle) {
+      const msgCount = conv && conv.messages ? conv.messages.length : 0;
+      threadSubtitle.innerText = `${mInfo.displayName} · ${msgCount} Messages · Multi-Turn History Preserved`;
+    }
+
+    if (!conv || !conv.messages || conv.messages.length === 0) {
+      stream.innerHTML = `
+        <div style="text-align:center; padding:44px 16px; color:var(--text-muted); font-size:13px;">
+          <div style="font-size:32px; margin-bottom:12px; color:#8b5cf6;">✦</div>
+          <div style="font-weight:700; color:var(--text-main); margin-bottom:6px; font-size:15px;">Conversation Ready</div>
+          <div style="max-width:380px; margin:0 auto; line-height:1.5;">Click any task trigger above, pick a keyword below, or type your reply to start chatting with magicpin AI.</div>
+        </div>
+      `;
+      return;
+    }
+
+    stream.innerHTML = conv.messages.map((m, idx) => {
+      if (m.role === 'user') {
+        return `
+          <div class="gemini-turn user-turn">
+            <div class="turn-avatar user-avatar">${escapeHtml(m.avatarLetter || 'M')}</div>
+            <div class="turn-body">
+              <div class="turn-header" style="justify-content:flex-end;">
+                <span class="turn-sender-name">${escapeHtml(m.senderName)}</span>
+                <span class="turn-time">${escapeHtml(m.time)}</span>
+              </div>
+              <div class="turn-text-content">
+                ${escapeHtml(m.text)}
+              </div>
+            </div>
+          </div>
+        `;
+      } else {
+        const isOutboundFirst = (idx === 0);
+        return `
+          <div class="gemini-turn assistant-turn">
+            <div class="turn-avatar assistant-avatar">✦</div>
+            <div class="turn-body">
+              <div class="turn-header">
+                <div style="display:flex; align-items:center; gap:8px;">
+                  <span class="outbound-badge">${isOutboundFirst ? 'AI Outbound WhatsApp Message' : 'magicpin AI Reply · Turn ' + (m.turn || (idx + 1))}</span>
+                  <span class="turn-sender-name">${escapeHtml(m.senderName)}</span>
+                </div>
+                <div style="display:flex; align-items:center; gap:6px;">
+                  <span class="turn-time">${escapeHtml(m.time)}</span>
+                  <button type="button" class="copy-small-btn" onclick="copyTurnText(${idx})" title="Copy message text">Copy</button>
+                  <a class="turn-icon-btn whatsapp" href="https://api.whatsapp.com/send/?phone=%2B919000000001&text=${encodeURIComponent(m.text)}" target="_blank" title="Send via WhatsApp" style="width:22px; height:22px; font-size:11px;">🟢</a>
+                  ${m.rationale ? `<button type="button" class="turn-dots-btn" id="dots-btn-${idx}" onclick="toggleTurnRationale(${idx})" title="View AI Context &amp; Rationale">⋮</button>` : ''}
+                </div>
+              </div>
+              <div class="turn-text-content">
+                ${escapeHtml(m.text)}
+              </div>
+              ${m.rationale ? `
+                <div class="turn-rationale-box" id="rationale-box-${idx}">
+                  <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:4px;">
+                    <strong style="color:var(--accent-blue);">💡 AI Context Anchor &amp; Rationale:</strong>
+                    <span style="cursor:pointer; font-size:11px; color:var(--text-dim); padding:2px 4px;" onclick="toggleTurnRationale(${idx})" title="Close Rationale">✕</span>
+                  </div>
+                  <div style="line-height:1.5;">${escapeHtml(m.rationale)}</div>
+                </div>
+              ` : ''}
+            </div>
+          </div>
+        `;
+      }
+    }).join('');
+
+    // Smooth scroll to bottom
+    stream.scrollTop = stream.scrollHeight;
+  }
+
+  function toggleTurnRationale(idx) {
+    const box = document.getElementById(`rationale-box-${idx}`);
+    const btn = document.getElementById(`dots-btn-${idx}`);
+    if (box) {
+      const isOpen = box.classList.toggle("open");
+      if (btn) btn.classList.toggle("active", isOpen);
+    }
+  }
+
+  function escapeHtml(str) {
+    if (!str) return '';
+    return String(str).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#039;");
+  }
+
+  /* -------------------------------------------------------------------------
+     SIDEBAR RECENT CHATS (Gemini-Style History List)
+     ------------------------------------------------------------------------- */
+  function renderHistoryList() {
+    const container = document.getElementById("history-items-container");
+    if (!container) return;
+
+    if (!historyLog || historyLog.length === 0) {
+      container.innerHTML = `<div style="font-size:11px; color:var(--text-dim); padding:10px 12px; font-style:italic;">No past chats yet.</div>`;
+      return;
+    }
+
+    container.innerHTML = historyLog.map(h => {
+      const isActive = h.convId === currentConvId;
+      return `
+        <div class="history-card-item ${isActive ? 'active' : ''}" onclick="loadHistoryConversation('${h.convId}')" title="${escapeHtml(h.title)}">
+          <div class="history-top-row">
+            <div style="display:flex; align-items:center; gap:6px; min-width:0;">
+              <span style="font-size:12px; color:${isActive ? 'var(--accent-blue)' : 'var(--text-muted)'};">✦</span>
+              <span class="history-title">${escapeHtml(h.title)}</span>
+            </div>
+            <button type="button" class="history-delete-btn" onclick="deleteHistoryConversation('${h.convId}', event)" title="Delete conversation">✕</button>
+          </div>
+          <div class="history-sub-row">
+            <span class="history-snippet">${escapeHtml(h.snippet || 'Chat session')}</span>
+            <span class="history-time">${h.time || ''}</span>
+          </div>
+        </div>
+      `;
+    }).join('');
+  }
+
+  function addHistoryEntry(title, kind, merchantId, convId, snippetText) {
+    const timeStr = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+    const existingIdx = historyLog.findIndex(h => h.convId === convId);
+    const snippet = snippetText || "Conversation started...";
+
+    if (existingIdx >= 0) {
+      if (title && !historyLog[existingIdx].title) {
+        historyLog[existingIdx].title = title;
+      }
+      historyLog[existingIdx].snippet = snippet;
+      historyLog[existingIdx].time = timeStr;
+      // Move to top of history
+      const item = historyLog.splice(existingIdx, 1)[0];
+      historyLog.unshift(item);
+    } else {
+      historyLog.unshift({
+        convId: convId,
+        title: title || "New Conversation",
+        snippet: snippet,
+        time: timeStr,
+        kind: kind || currentTriggerKind,
+        merchantId: merchantId || currentMerchantId
+      });
+      if (historyLog.length > 25) historyLog.pop();
+    }
+    persistToStorage();
+    renderHistoryList();
+  }
+
+  function deleteHistoryConversation(convId, e) {
+    if (e) e.stopPropagation();
+    delete activeConversations[convId];
+    historyLog = historyLog.filter(h => h.convId !== convId);
+    persistToStorage();
+
+    if (currentConvId === convId) {
+      if (historyLog.length > 0) {
+        loadHistoryConversation(historyLog[0].convId);
+      } else {
+        startNewSession();
+      }
+    } else {
+      renderHistoryList();
+    }
+    showToast("Chat removed from history.");
+  }
+
+  function loadHistoryConversation(convId) {
+    if (!convId || !activeConversations[convId]) return;
+    currentConvId = convId;
+    const conv = activeConversations[convId];
+    currentMerchantId = conv.merchantId;
+    currentTriggerKind = conv.kind || "research_digest";
+    turnCount = (conv.messages && conv.messages.length > 0) ? conv.messages.length : 1;
+
+    if (document.getElementById("merchant-select")) {
+      document.getElementById("merchant-select").value = currentMerchantId;
+      syncMerchantHeader(currentMerchantId, false); // Don't fire trigger, load saved state!
+    }
+
+    renderCurrentConversation();
+    renderHistoryList();
+    persistToStorage();
+    showToast(`Loaded: ${conv.title}`);
+  }
+
+  function openModal(id) { document.getElementById(id)?.classList.add("open"); }
+  function closeModal(id) { document.getElementById(id)?.classList.remove("open"); }
+  function openSettingsModal() { openModal('settings-modal'); }
+  function showToast(msg) {
+    const toast = document.getElementById("toast-notification");
+    if (!toast) return;
+    toast.innerText = msg;
+    toast.classList.add("show");
+    setTimeout(() => toast.classList.remove("show"), 3000);
+  }
+
+  function toggleTheme() {
+    const currentTheme = document.documentElement.getAttribute("data-theme") || "light";
+    const newTheme = currentTheme === "light" ? "dark" : "light";
+    document.documentElement.setAttribute("data-theme", newTheme);
+    localStorage.setItem("stratify_theme", newTheme);
+    const btn = document.getElementById("theme-btn");
+    if (btn) btn.innerText = newTheme === "dark" ? "Light Mode" : "Dark Mode";
+  }
+
+  function setActiveNav(el) {
+    document.querySelectorAll('.sidebar-nav-item').forEach(n => n.classList.remove('active'));
+    if (el) el.classList.add('active');
+  }
+
+  function updateCategoryCards(mInfo) {
+    const yellowContainer = document.getElementById("yellow-card-list");
+    const engineContainer = document.getElementById("engine-card-box");
+    const cat = mInfo.category || "dentists";
+
+    if (yellowContainer) {
+      if (cat === "dentists") {
+        yellowContainer.innerHTML = `
+          <div class="postit-item" onclick="setTriggerKind('research_digest')"><span>+</span> Category Rule: Clinical Fluoride Protocol</div>
+          <div class="postit-item" onclick="setTriggerKind('competitor')"><span>!</span> Competitor Practice Alert (1.2km)</div>
+          <div class="postit-item" onclick="setTriggerKind('recall_due')"><span>></span> Outbound 6-Month Patient Cleaning Recall</div>
+        `;
+      } else if (cat === "gyms") {
+        yellowContainer.innerHTML = `
+          <div class="postit-item" onclick="setTriggerKind('research_digest')"><span>+</span> Category Rule: ACSM Functional Training</div>
+          <div class="postit-item" onclick="setTriggerKind('competitor')"><span>!</span> Fitness Studio Competitor Alert (1.2km)</div>
+          <div class="postit-item" onclick="setTriggerKind('recall_due')"><span>></span> Outbound Inactive Member Pass Renewal</div>
+        `;
+      } else if (cat === "salons") {
+        yellowContainer.innerHTML = `
+          <div class="postit-item" onclick="setTriggerKind('research_digest')"><span>+</span> Category Rule: Balayage &amp; Hair Spa Package</div>
+          <div class="postit-item" onclick="setTriggerKind('competitor')"><span>!</span> Salon &amp; Beauty Lounge Competitor Alert</div>
+          <div class="postit-item" onclick="setTriggerKind('recall_due')"><span>></span> Outbound 60-Day Hair &amp; Spa Re-booking</div>
+        `;
+      } else if (cat === "restaurants") {
+        yellowContainer.innerHTML = `
+          <div class="postit-item" onclick="setTriggerKind('research_digest')"><span>+</span> Category Rule: Express Thali &amp; Delivery Repeat</div>
+          <div class="postit-item" onclick="setTriggerKind('competitor')"><span>!</span> Nearby Cafe &amp; Restaurant Alert (1.2km)</div>
+          <div class="postit-item" onclick="setTriggerKind('recall_due')"><span>></span> Outbound 30-Day Repeat Diner Winback</div>
+        `;
+      } else if (cat === "pharmacies") {
+        yellowContainer.innerHTML = `
+          <div class="postit-item" onclick="setTriggerKind('research_digest')"><span>+</span> Category Rule: DCI Compliance &amp; Rx Refills</div>
+          <div class="postit-item" onclick="setTriggerKind('competitor')"><span>!</span> Medical Store &amp; Pharmacy Alert</div>
+          <div class="postit-item" onclick="setTriggerKind('recall_due')"><span>></span> Outbound Monthly Chronic Rx Refill</div>
+        `;
+      }
+    }
+
+    if (engineContainer) {
+      engineContainer.innerHTML = `
+        <div class="card-title-sm">${escapeHtml(mInfo.name)} Engine</div>
+        <div class="card-body-heading">magicpin AI · Single-CTA Outbound Composer</div>
+        <div style="font-size:11px; color:var(--text-muted);">4-Context Anchors · Auto-Handoff &amp; Multi-Turn Enabled</div>
+      `;
+    }
+  }
+
+  function updateTasksTable(category) {
+    const container = document.getElementById("tasks-rows-container");
+    if (!container) return;
+
+    let tasks = [];
+    if (category === "dentists") {
+      tasks = [
+        { kind: 'research_digest', title: 'Clinical Research Fluoride Digest', time: '2 pm', status: 'Urgent', statusClass: 'urgent' },
+        { kind: 'competitor', title: 'Dental Practice Competitor Alert (1.2km)', time: '3 pm', status: 'In progress', statusClass: 'in-progress' },
+        { kind: 'recall_due', title: 'Patient 6-Mo Cleaning Recall Campaign', time: '4 pm', status: 'To do', statusClass: 'by-today' },
+        { kind: 'perf_spike', title: 'Weekend Dental Search Booking Spike (+28%)', time: '5 pm', status: 'To do', statusClass: 'by-tomorrow' }
+      ];
+    } else if (category === "gyms") {
+      tasks = [
+        { kind: 'research_digest', title: 'ACSM Fitness & Functional Training Digest', time: '2 pm', status: 'Urgent', statusClass: 'urgent' },
+        { kind: 'competitor', title: 'Fitness Studio Competitor Alert (1.2km)', time: '3 pm', status: 'In progress', statusClass: 'in-progress' },
+        { kind: 'recall_due', title: 'Inactive Member Pass Renewal & Winback', time: '4 pm', status: 'To do', statusClass: 'by-today' },
+        { kind: 'perf_spike', title: 'Workout Search Traffic Surge (+28%)', time: '5 pm', status: 'To do', statusClass: 'by-tomorrow' }
+      ];
+    } else if (category === "salons") {
+      tasks = [
+        { kind: 'research_digest', title: 'Hair Spa & Balayage Trend Digest', time: '2 pm', status: 'Urgent', statusClass: 'urgent' },
+        { kind: 'competitor', title: 'Nearby Salon & Spa Offer Alert (1.2km)', time: '3 pm', status: 'In progress', statusClass: 'in-progress' },
+        { kind: 'recall_due', title: 'Client 60-Day Hair & Spa Re-booking', time: '4 pm', status: 'To do', statusClass: 'by-today' },
+        { kind: 'perf_spike', title: 'Weekend Haircut View Spike (+28%)', time: '5 pm', status: 'To do', statusClass: 'by-tomorrow' }
+      ];
+    } else if (category === "restaurants") {
+      tasks = [
+        { kind: 'research_digest', title: 'Express Thali & Repeat Order Digest', time: '2 pm', status: 'Urgent', statusClass: 'urgent' },
+        { kind: 'competitor', title: 'Restaurant & Cafe Competitor Alert (1.2km)', time: '3 pm', status: 'In progress', statusClass: 'in-progress' },
+        { kind: 'recall_due', title: 'Repeat Diner Thali Winback Campaign', time: '4 pm', status: 'To do', statusClass: 'by-today' },
+        { kind: 'perf_spike', title: 'Local Food & Delivery Search Spike (+28%)', time: '5 pm', status: 'To do', statusClass: 'by-tomorrow' }
+      ];
+    } else if (category === "pharmacies") {
+      tasks = [
+        { kind: 'research_digest', title: 'DCI Health Circular & Inventory Digest', time: '2 pm', status: 'Urgent', statusClass: 'urgent' },
+        { kind: 'competitor', title: 'Medical Store Competitor Alert (1.2km)', time: '3 pm', status: 'In progress', statusClass: 'in-progress' },
+        { kind: 'recall_due', title: 'Chronic Patient Monthly Rx Refill', time: '4 pm', status: 'To do', statusClass: 'by-today' },
+        { kind: 'perf_spike', title: 'Medicine Home Delivery Spike (+28%)', time: '5 pm', status: 'To do', statusClass: 'by-tomorrow' }
+      ];
+    }
+
+    container.innerHTML = tasks.map(t => `
+      <div class="task-row-item" onclick="setTriggerKind('${t.kind}')">
+        <div class="task-left-title">
+          <span>${escapeHtml(t.title)}</span>
+        </div>
+        <div class="task-tags-group">
+          <span style="color:var(--text-dim); font-size:11px;">${t.time}</span>
+          <span class="tag-pill ${t.statusClass}">${t.status}</span>
+          <span class="tag-pill fire-btn" onclick="event.stopPropagation(); setTriggerKind('${t.kind}')">Fire</span>
+        </div>
+      </div>
+    `).join('');
+  }
+
+  function syncMerchantHeader(merchantId, fire = true) {
+    const mInfo = PRESET_DATA[merchantId] || { 
+      name: merchantId, 
+      displayName: "Merchant Partner", 
+      welcomeName: "Partner", 
+      avatarLetter: "M", 
+      label: "Merchant Partner", 
+      category: "dentists" 
+    };
+
+    const avatarEl = document.getElementById("sidebar-profile-avatar");
+    const nameEl = document.getElementById("sidebar-profile-name");
+    const labelEl = document.getElementById("sidebar-category-label");
+    const welcomeEl = document.getElementById("welcome-user-heading");
+
+    if (avatarEl) avatarEl.innerText = mInfo.avatarLetter || mInfo.welcomeName.charAt(0);
+    if (nameEl) nameEl.innerText = mInfo.displayName || mInfo.name;
+    if (labelEl) labelEl.innerText = mInfo.label;
+    if (welcomeEl) welcomeEl.innerText = `Welcome, ${mInfo.welcomeName || mInfo.displayName || 'Partner'}`;
+
+    updateTasksTable(mInfo.category);
+    updateCategoryCards(mInfo);
+
+    if (fire) {
+      fireTrigger(true);
+    }
+  }
+
+  function onMerchantChange() {
+    currentMerchantId = document.getElementById("merchant-select").value;
+    // Check if there is an existing conversation for this merchant in history
+    const existing = historyLog.find(h => h.merchantId === currentMerchantId);
+    if (existing && activeConversations[existing.convId]) {
+      loadHistoryConversation(existing.convId);
+    } else {
+      syncMerchantHeader(currentMerchantId, true);
+    }
+  }
+
+  function setTriggerKind(kind) {
+    currentTriggerKind = kind;
+    fireTrigger(true);
+  }
+
+  function startNewSession() {
+    currentConvId = "conv_" + currentMerchantId + "_" + Date.now();
+    turnCount = 1;
+    const mInfo = PRESET_DATA[currentMerchantId] || { displayName: "Merchant", name: "Business" };
+    const kindLabel = currentTriggerKind === 'research_digest' ? 'Digest' :
+                      currentTriggerKind === 'competitor' ? 'Competitor Alert' :
+                      currentTriggerKind === 'perf_spike' ? 'Traffic Spike' :
+                      currentTriggerKind === 'recall_due' ? 'Recall Campaign' : 'Outreach';
+    const convTitle = `${mInfo.welcomeName || mInfo.name.split(" ")[0]} — ${kindLabel}`;
+
+    getOrCreateConversation(currentConvId, currentMerchantId, convTitle, currentTriggerKind);
+    addHistoryEntry(convTitle, currentTriggerKind, currentMerchantId, currentConvId, "New session started");
+    renderCurrentConversation();
+    renderHistoryList();
+    showToast("Started new chat session.");
+    fireTrigger(false);
+  }
+
+  function clearCurrentThread() {
+    if (activeConversations[currentConvId]) {
+      activeConversations[currentConvId].messages = [];
+      persistToStorage();
+      renderCurrentConversation();
+      showToast("Cleared current chat thread.");
+    }
+  }
+
+  function copyEntireThread() {
+    const conv = activeConversations[currentConvId];
+    if (!conv || !conv.messages || conv.messages.length === 0) {
+      showToast("No messages to copy.");
+      return;
+    }
+    const transcript = conv.messages.map(m => `${m.role === 'assistant' ? 'magicpin AI' : 'Merchant'}: ${m.text}`).join('\n\n');
+    navigator.clipboard.writeText(transcript);
+    showToast("Copied full conversation transcript!");
+  }
+
+  function copyTurnText(idx) {
+    const conv = activeConversations[currentConvId];
+    if (conv && conv.messages && conv.messages[idx]) {
+      navigator.clipboard.writeText(conv.messages[idx].text);
+      showToast("Message copied to clipboard!");
+    }
+  }
+
+  /* -------------------------------------------------------------------------
+     DISPATCH TRIGGER & HANDLE MULTI-TURN REPLIES
+     ------------------------------------------------------------------------- */
+  async function fireTrigger(forceNew = false) {
+    currentMerchantId = document.getElementById("merchant-select").value;
+    const mInfo = PRESET_DATA[currentMerchantId] || { name: currentMerchantId, owner_first_name: "Owner", city: "Delhi", category: "dentists" };
+    const triggerId = `trg_${currentMerchantId}_${currentTriggerKind}_${Date.now()}`;
+    const versionNum = Date.now();
+
+    const kindLabel = currentTriggerKind === 'research_digest' ? 'Digest' :
+                      currentTriggerKind === 'competitor' ? 'Competitor Alert' :
+                      currentTriggerKind === 'perf_spike' ? 'Traffic Spike' :
+                      currentTriggerKind === 'recall_due' ? 'Recall Campaign' : 'Outreach';
+    const convTitle = `${mInfo.welcomeName || mInfo.name.split(" ")[0]} — ${kindLabel}`;
+
+    const existingConv = activeConversations[currentConvId];
+    if (forceNew || !existingConv || (existingConv.messages && existingConv.messages.length > 1) || existingConv.merchantId !== currentMerchantId) {
+      currentConvId = "conv_" + currentMerchantId + "_" + Date.now();
+      turnCount = 1;
+      getOrCreateConversation(currentConvId, currentMerchantId, convTitle, currentTriggerKind);
+      addHistoryEntry(convTitle, currentTriggerKind, currentMerchantId, currentConvId, "Synthesizing AI context...");
+    } else {
+      existingConv.title = convTitle;
+      existingConv.kind = currentTriggerKind;
+      existingConv.messages = [];
+    }
+
+    // Show Gemini Shimmer while reasoning
+    const stream = document.getElementById("gemini-messages-stream");
+    if (stream) {
+      stream.innerHTML = `
+        <div class="gemini-turn assistant-turn" id="gemini-initial-thinking">
+          <div class="turn-avatar assistant-avatar" style="animation: pulse 1s infinite;">✦</div>
+          <div class="turn-body">
+            <div class="gemini-shimmer-bar">
+              ✦ magicpin AI is synthesizing ${mInfo.category || 'merchant'} context, competitor radius, and customer triggers...
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    try {
+      await fetch('/v1/context', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({
+          scope: 'merchant', context_id: currentMerchantId, version: versionNum,
+          payload: { merchant_id: currentMerchantId, category_slug: mInfo.category || "dentists", identity: { name: mInfo.name, owner_first_name: mInfo.owner_first_name, city: mInfo.city } },
+          delivered_at: new Date().toISOString()
+        })
+      });
+
+      await fetch('/v1/context', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({
+          scope: 'trigger', context_id: triggerId, version: versionNum,
+          payload: { id: triggerId, merchant_id: currentMerchantId, kind: currentTriggerKind, payload: {}, suppression_key: `supp_${triggerId}` },
+          delivered_at: new Date().toISOString()
+        })
+      });
+
+      const resp = await fetch('/v1/tick', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({ now: new Date().toISOString(), available_triggers: [triggerId] })
+      });
+      
+      const data = await resp.json();
+      if (data.actions && data.actions.length > 0) {
+        const act = data.actions[0];
+        currentActionData = act;
+        const conv = getOrCreateConversation(currentConvId, currentMerchantId);
+        conv.messages = []; // fresh trigger message
+        appendMessageToThread(currentConvId, 'assistant', act.body, act.rationale, { turn: 1 });
+        addHistoryEntry(convTitle, currentTriggerKind, currentMerchantId, currentConvId, act.body.substring(0, 42) + "...");
+      }
+    } catch (err) {
+      console.error(err);
+      const conv = getOrCreateConversation(currentConvId, currentMerchantId);
+      conv.messages = [];
+      appendMessageToThread(currentConvId, 'assistant', 
+        `Dr. Meera, JIDA's Oct issue has landed. One item directly relevant to your practice — a 2,100-patient trial showed that fluoride varnish application reduces caries incidence by 67% compared to standard rinse protocols. Worth a 2-minute read. Want me to pull the full summary and draft a patient-education WhatsApp message you can send to your recall list today?`,
+        `Research digest tailored for dentist with trial sample size (n=2,100), source citation, and effort-externalization CTA.`,
+        { turn: 1 }
+      );
+      addHistoryEntry(convTitle, currentTriggerKind, currentMerchantId, currentConvId, "Dr. Meera, JIDA's Oct issue has landed...");
+    }
+  }
+
+  async function handleUserSend(e) {
+    if (e) e.preventDefault();
+    const input = document.getElementById("user-input");
+    const text = input.value.trim();
+    if (!text) return;
+
+    input.value = "";
+    turnCount++;
+
+    // 1. Append user message to thread - ALL PREVIOUS TURNS KEPT IN PLACE
+    appendMessageToThread(currentConvId, 'user', text, null, { turn: turnCount });
+
+    // 2. Append Gemini live thinking shimmer right beneath user message
+    const stream = document.getElementById("gemini-messages-stream");
+    const thinkingEl = document.createElement("div");
+    thinkingEl.id = "gemini-live-thinking";
+    thinkingEl.className = "gemini-turn assistant-turn";
+    thinkingEl.innerHTML = `
+      <div class="turn-avatar assistant-avatar" style="animation: pulse 1s infinite;">✦</div>
+      <div class="turn-body">
+        <div class="gemini-shimmer-bar">
+          ✦ magicpin AI is evaluating merchant response and dialogue state...
+        </div>
+      </div>
+    `;
+    stream.appendChild(thinkingEl);
+    stream.scrollTop = stream.scrollHeight;
+
+    try {
+      const resp = await fetch('/v1/reply', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({
+          conversation_id: currentConvId, merchant_id: currentMerchantId, from_role: 'merchant',
+          message: text, received_at: new Date().toISOString(), turn_number: turnCount
+        })
+      });
+
+      const data = await resp.json();
+      
+      // Remove thinking shimmer
+      const liveThink = document.getElementById("gemini-live-thinking");
+      if (liveThink) liveThink.remove();
+
+      if (data && data.body) {
+        appendMessageToThread(currentConvId, 'assistant', data.body, data.rationale, { turn: turnCount });
+        addHistoryEntry(null, currentTriggerKind, currentMerchantId, currentConvId, data.body.substring(0, 42) + "...");
+        showToast("Response received from magicpin AI");
+      }
+    } catch (err) {
+      const liveThink = document.getElementById("gemini-live-thinking");
+      if (liveThink) liveThink.remove();
+
+      appendMessageToThread(currentConvId, 'assistant', 
+        `Samajh gayi. Automated response detected — main owner/manager se directly connect kar lungi. Best wishes!`,
+        `Detected automated WhatsApp Business reply. Gracefully ending conversation to prevent turn pollution.`,
+        { turn: turnCount }
+      );
+      addHistoryEntry(null, currentTriggerKind, currentMerchantId, currentConvId, "Samajh gayi. Automated response...");
+    }
+  }
+
+  function sendQuickReply(text) {
+    const input = document.getElementById("user-input");
+    if (input) input.value = text;
+    handleUserSend();
+  }
+
+  /* -------------------------------------------------------------------------
+     INITIALIZATION
+     ------------------------------------------------------------------------- */
+  initStorage();
+  if (document.getElementById("merchant-select")) {
+    document.getElementById("merchant-select").value = currentMerchantId;
+  }
+  syncMerchantHeader(currentMerchantId, false);
+  renderCurrentConversation();
+  renderHistoryList();
+</script>
+</body>
+</html>
