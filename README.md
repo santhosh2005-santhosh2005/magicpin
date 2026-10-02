@@ -1,6 +1,7 @@
 # magicpin AI Challenge — Vera Merchant AI Assistant ("Vera")
 
 **Submission Team**: Vera Merchant AI Team  
+check it out : https://magicpin-sz07.onrender.com/
 **Model**: Vera-Composer-v2 (4-Context Composition & Multi-Turn Engine)  
 **Last Updated**: 2026-10-01  
 
